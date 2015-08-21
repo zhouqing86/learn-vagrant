@@ -1,0 +1,4 @@
+---
+  - name: Unable to lock the administration directory
+    command: rm /var/cache/apt/archives/lock /var/lib/dpkg/lock
+    tags: apt-lock

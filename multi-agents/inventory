@@ -1,0 +1,4 @@
+[x]
+192.168.33.71 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.33.72 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+192.168.33.73 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
