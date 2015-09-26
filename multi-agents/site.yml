@@ -1,10 +1,12 @@
 ---
-- hosts: 192.168.33.72
+- hosts: all
   sudo: yes
   vars:
     __java_packages: 
       - openjdk-7-jdk
     password: $6$rounds=100000$8p/Y.YdUDTl7amOn$db.AP/6Lhsv59YPQQMV2U1XSKSaVLi3iMjO7eoCa3juMESs0Q6S6ehhCS3.5/.ZJg02/fk886GPVy5uGHrlbK0
+    ruby_download_url: http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz
+
 
   tasks:
     - name: Define java_packages.
@@ -18,8 +20,8 @@
     - name: Add jenkins group
       group: name=jenkins state=present
 
-    - name: Remove jenkins user
-      user: name=jenkins state=absent
+    # - name: Remove jenkins user
+    #   user: name=jenkins state=absent
 
     - name: Add jenkins user
       user: name=jenkins comment="jenkins user" shell=/bin/bash password={{password}} generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa group=jenkins
@@ -27,9 +29,9 @@
     - name: create jenkins work directory
       file: path=/var/jenkins state=directory owner=jenkins group=jenkins mode=0755
 
-    # - name: Remove the locked file
-    #   command: rm /var/lib/dpkg/lock
-    #   tags: clean_tag
+    - name: Remove the locked file
+      file: path=/var/lib/dpkg/lock state=absent
+      tags: clean_tag
 
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=86400
@@ -40,3 +42,9 @@
 
     - name: Install git 
       apt: name=git state=present
+
+    - name: Install maven
+      apt: name=maven state=installed
+
+  roles:
+    - ruby
