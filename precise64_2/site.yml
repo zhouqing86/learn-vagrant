@@ -1,0 +1,19 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+    __java_packages:
+      - openjdk-7-jdk
+
+  tasks:
+    - name: Define java_packages.
+      set_fact:
+        java_packages: "{{ __java_packages | list }}"
+      when: java_packages is not defined
+
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=86400
+
+    - name: Ensure Java is installed.
+      apt: "name={{ item }} state=installed"
+      with_items: java_packages

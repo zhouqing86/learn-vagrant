@@ -1,0 +1,5 @@
+---
+- name: install docker io
+  apt: name=docker.io state=installed
+- name: install docker
+  apt: name=docker  state=installed

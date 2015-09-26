@@ -1,0 +1,40 @@
+---
+- name: Check whether rbenv installed
+  shell: rbenv -v
+  register: rbenv_version_info
+  changed_when: false
+  failed_when: false
+
+- name: whether rbenv is installed.
+  set_fact: 
+    is_rbenv_installed: false
+  when: rbenv_version_info.stderr.find('not found') != -1
+
+- name: remove .rbenv directory when rbenv is not installed
+  file: path=/root/.rbenv state=absent
+  when: not is_rbenv_installed
+
+- name: Install rbenv
+  git: repo={{rbenv_repo}} dest=/root/.rbenv update=no
+  when: not is_rbenv_installed
+
+- name: Install ruby build
+  git: repo={{ruby_build_repo}} dest=/root/.rbenv/plugins/ruby-build update=no
+  when: not is_rbenv_installed
+
+- name: Install rbenv gemset
+  git: repo={{rbenv_gemset_repo}} dest=/root/.rbenv/plugins/rbenv-gemset update=no
+  when: not is_rbenv_installed
+
+- name: Install rbenv gem hash
+  git: repo={{rbenv_gem_rehash_repo}} dest=/root/.rbenv/plugins/rbenv-gem-rehash update=no
+  when: not is_rbenv_installed
+
+- name: Install rbenv update
+  git: repo={{rbenv_update_repo}} dest=/root/.rbenv/rbenv-update update=no
+  when: not is_rbenv_installed
+
+- name: Set the Env of rbenv
+  command: export PATH="/root/.rbenv/bin:$PATH"; eval "$(rbenv init -)"
+  changed_when: false
+  failed_when: false
