@@ -1,0 +1,29 @@
+<!DOCTYPE>
+<html>
+<meta charset="utf-8">
+<head>
+  <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#add").click(function(){
+        var obj = {item: $('#item').val()};
+        $.post("/node-web-api/msg/add",obj, function(data,status){
+          alert("Add result:"+status);
+        });
+      });
+
+      $("#find").click(function(){
+        $.get("/node-web-api/msg/find",function(data,status){
+          $("#content").html(data);
+        });
+      })
+    });
+  </script>
+</head>
+<body>
+  AAAAAAAAAA
+  <input id="item" type="text"> <input id="add" type="button" value="添加" > <br/>
+  <input id="find" type="button" value="查询">
+  <p id="content"></p>
+</body>
+</html>

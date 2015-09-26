@@ -1,0 +1,14 @@
+{
+  "name": "DockerNodejsWebAPP",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Docker nodejs Web APP",
+  "author": "27952278@qq.com",
+  "dependencies": {
+    "express": "4.11.0",
+    "mongodb": "1.4.28",
+    "body-parser": "1.9.2"
+  }
+
+
+}
