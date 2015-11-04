@@ -1,1 +1,4 @@
 .vagrant/
+kubernetes/
+tags
+.tags

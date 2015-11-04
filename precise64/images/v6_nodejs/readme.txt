@@ -1,3 +1,5 @@
+Before that, to make sure mongodb docker already exist.
+
 docker build -t wendll/ubuntu-nodejs:v1 ./
 docker run -d --name test_nodejs -p 8888:8080 wendll/ubuntu-nodejs:v1
 
@@ -8,3 +10,7 @@ db.msg_list.save({time: 1443268449598, data: "nishishuia"});
 db.msg_list.find();
 
 curl http://127.0.0.1:8888/node-web-api/msg/find
+
+curl http://192.168.33.80:8888/node-web-api/msg/find
+
+curl -d "item=JustForTest" "http://192.168.33.80:8888/node-web-api/msg/add"
